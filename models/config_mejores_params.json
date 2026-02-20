@@ -1,0 +1,86 @@
+{
+  "features": [
+    "LOG_SALDO",
+    "DIAS MORA",
+    "ANTIGUEDAD_MESES",
+    "EDAD_CLIENTE",
+    "MESES_DESDE_ULTIMO_PAGO",
+    "SCORE_CONTACTABILIDAD",
+    "RATIO_CUOTA_SALDO",
+    "SEXO_M",
+    "SEXO_F"
+  ],
+  "random_state": 42,
+  "mejor_clasificador": {
+    "nombre": "GradientBoosting_Cls",
+    "resultados_cv": {
+      "Modelo": "GradientBoosting_Cls",
+      "CV_AUC_mean": 0.6695419028773706,
+      "CV_AUC_std": 0.007521406993416406,
+      "AUC_Train": 0.759080519528462,
+      "AUC_Test": 0.7079221322570326,
+      "Overfit_Gap": 0.051158387271429406,
+      "F1_Test": 0.22485207100591717,
+      "Acc_Test": 0.6866028708133971
+    }
+  },
+  "mejor_regresor": {
+    "nombre": "GradientBoosting_Reg",
+    "resultados_cv": {
+      "Modelo": "GradientBoosting_Reg",
+      "CV_R2_mean": 0.43351987274787246,
+      "CV_R2_std": 0.05510085683727425,
+      "R2_Train": 0.7240615042363372,
+      "R2_Test": 0.37338707168322505,
+      "Overfit_Gap": 0.35067443255311215,
+      "MAE_Test": 1872.4188542350512,
+      "RMSE_Test": 3867.177770408837
+    }
+  },
+  "hyperparams_optimizados": {
+    "clasificadores": {
+      "RF_Clasificador": {
+        "best_params": {
+          "max_depth": 15,
+          "max_features": "sqrt",
+          "min_samples_leaf": 8,
+          "min_samples_split": 17,
+          "n_estimators": 286
+        },
+        "best_cv_score": 0.684432905055536
+      },
+      "GB_Clasificador": {
+        "best_params": {
+          "learning_rate": 0.017371546755787604,
+          "max_depth": 7,
+          "min_samples_split": 8,
+          "n_estimators": 290,
+          "subsample": 0.7257423924305306
+        },
+        "best_cv_score": 0.6805485461504313
+      }
+    },
+    "regresores": {
+      "RF_Regresor": {
+        "best_params": {
+          "max_depth": 20,
+          "max_features": "sqrt",
+          "min_samples_leaf": 1,
+          "min_samples_split": 11,
+          "n_estimators": 269
+        },
+        "best_cv_score": 0.46857839703129595
+      },
+      "GB_Regresor": {
+        "best_params": {
+          "learning_rate": 0.012049228513718048,
+          "max_depth": 3,
+          "min_samples_split": 18,
+          "n_estimators": 268,
+          "subsample": 0.8447411578889518
+        },
+        "best_cv_score": 0.46607528869920306
+      }
+    }
+  }
+}
