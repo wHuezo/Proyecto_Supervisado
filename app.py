@@ -135,7 +135,7 @@ if modo_app == "Calculadora Individual":
         m2.metric("Recuperación Estimada", f"${monto:,.2f}")
         m3.metric("Valor Esperado Total", f"${ev:,.2f}")
 
-elif modo_app == "Dashboard Masivo (Lotes)":
+elif modo_app == "Procesamiento Masivo (Lotes)":
     st.title("Dashboard Analítico Masivo")
     st.markdown("Sube tus archivos CSV para procesar miles de cuentas a la vez.")
     
