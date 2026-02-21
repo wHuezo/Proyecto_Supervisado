@@ -188,7 +188,7 @@ elif modo_app == "Procesamiento Masivo (Lotes)":
     perfil_cobranza = st.sidebar.selectbox("Perfil de cobranza", ['decreciente', 'uniforme'])
 
     if file_saldo is None:
-        st.info("👈 Sube tu archivo CSV en la barra lateral para habilitar el botón de ejecución.")
+        st.info("Sube tu archivo CSV en la barra lateral para habilitar el botón de ejecución.")
     else:
         # BOTÓN DE EJECUCIÓN
         ejecutar = st.button("EJECUTAR ANÁLISIS MASIVO", type="primary", use_container_width=True)
