@@ -7,7 +7,9 @@ from plotly.subplots import make_subplots
 import joblib
 import os
 
+# ============================================================
 # 1. CONFIGURACIÓN Y MENÚ LATERAL
+# ============================================================
 st.set_page_config(page_title="Valuador NPL — Grupo 4", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""
@@ -20,14 +22,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.title("Menú Principal")
+st.sidebar.title("📌 Menú Principal")
 modo_app = st.sidebar.radio(
     "Selecciona qué deseas hacer:",
-    ["Calculadora Individual", "Procesamiento Masivo (Lotes)"]
+    ["👤 Calculadora Individual", "📊 Procesamiento Masivo (Lotes)"]
 )
 st.sidebar.markdown("---")
 
+# ============================================================
 # 2. CARGA DE MODELOS
+# ============================================================
 MODELS_DIR = os.path.join(os.path.dirname(__file__), 'models')
 
 @st.cache_resource
@@ -43,7 +47,9 @@ except Exception as e:
     st.error(f"Error crítico cargando modelos: {e}")
     st.stop()
 
+# ============================================================
 # 3. FUNCIONES DE PROCESAMIENTO Y FINANZAS
+# ============================================================
 def preprocesar_cliente(saldo, dias_mora, antiguedad, recencia, edad, sexo, civil, score_contact=3.0, ratio_cuota=0.02):
     input_data = pd.DataFrame(columns=model_cols)
     input_data.loc[0] = 0
@@ -133,8 +139,10 @@ def distribuir_recuperacion_mensual(ve_total, perfil='decreciente', meses=12):
         return ve_total * (pesos / pesos.sum())
     return np.full(meses, ve_total / meses)
 
+# ============================================================
 # 4. INTERFAZ: MODO INDIVIDUAL
-if modo_app == "Calculadora Individual":
+# ============================================================
+if modo_app == "👤 Calculadora Individual":
     st.title("Valuador Individual de Cartera NPL")
     st.markdown("Evalúa a un cliente específico ingresando sus datos manualmente.")
     
@@ -164,8 +172,10 @@ if modo_app == "Calculadora Individual":
         m2.metric("Recuperación Estimada", f"${monto:,.2f}")
         m3.metric("Valor Esperado Total", f"${ev:,.2f}")
 
+# ============================================================
 # 5. INTERFAZ: MODO MASIVO (DASHBOARD FULL)
-elif modo_app == "Procesamiento Masivo (Lotes)":
+# ============================================================
+elif modo_app == "📊 Procesamiento Masivo (Lotes)":
     st.title("Dashboard Analítico Masivo")
     st.markdown("Sube tus archivos CSV para procesar miles de cuentas y generar el análisis financiero.")
     
@@ -234,8 +244,10 @@ elif modo_app == "Procesamiento Masivo (Lotes)":
             c7.metric("TIR Anual", f"{tir_anual:.1%}" if not np.isnan(tir_anual) else "N/D")
             c8.metric("VAN (10%)", f"${van_10:,.0f}")
 
-                        # TABS DEL DASHBOARD (VISUALIZACIONES)
-                        tab1, tab2, tab3 = st.tabs(["Distribución de Riesgo", "Análisis Financiero", "Detalle de Cuentas"])
+            # ============================================================
+            # TABS DEL DASHBOARD (VISUALIZACIONES)
+            # ============================================================
+            tab1, tab2, tab3 = st.tabs(["📊 Distribución de Riesgo", "📈 Análisis Financiero", "📋 Detalle de Cuentas"])
 
             with tab1:
                 st.subheader("Análisis de Riesgo y Segmentación")
