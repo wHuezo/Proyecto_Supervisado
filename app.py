@@ -7,9 +7,9 @@ from plotly.subplots import make_subplots
 import joblib
 import os
 
-# ============================================================
+
 # 1. CONFIGURACIÓN Y MENÚ LATERAL
-# ============================================================
+
 st.set_page_config(page_title="Valuador NPL — Grupo 4", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""
@@ -22,16 +22,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.title("📌 Menú Principal")
+st.sidebar.title("Menú Principal")
 modo_app = st.sidebar.radio(
     "Selecciona qué deseas hacer:",
-    ["👤 Calculadora Individual", "📊 Procesamiento Masivo (Lotes)"]
+    ["Calculadora Individual", "Procesamiento Masivo (Lotes)"]
 )
 st.sidebar.markdown("---")
 
-# ============================================================
+
 # 2. CARGA DE MODELOS
-# ============================================================
+
 MODELS_DIR = os.path.join(os.path.dirname(__file__), 'models')
 
 @st.cache_resource
@@ -47,9 +47,9 @@ except Exception as e:
     st.error(f"Error crítico cargando modelos: {e}")
     st.stop()
 
-# ============================================================
+
 # 3. FUNCIONES DE PROCESAMIENTO Y FINANZAS
-# ============================================================
+
 def preprocesar_cliente(saldo, dias_mora, antiguedad, recencia, edad, sexo, civil, score_contact=3.0, ratio_cuota=0.02):
     input_data = pd.DataFrame(columns=model_cols)
     input_data.loc[0] = 0
@@ -139,10 +139,9 @@ def distribuir_recuperacion_mensual(ve_total, perfil='decreciente', meses=12):
         return ve_total * (pesos / pesos.sum())
     return np.full(meses, ve_total / meses)
 
-# ============================================================
 # 4. INTERFAZ: MODO INDIVIDUAL
-# ============================================================
-if modo_app == "👤 Calculadora Individual":
+
+if modo_app == "Calculadora Individual":
     st.title("Valuador Individual de Cartera NPL")
     st.markdown("Evalúa a un cliente específico ingresando sus datos manualmente.")
     
@@ -172,18 +171,18 @@ if modo_app == "👤 Calculadora Individual":
         m2.metric("Recuperación Estimada", f"${monto:,.2f}")
         m3.metric("Valor Esperado Total", f"${ev:,.2f}")
 
-# ============================================================
+
 # 5. INTERFAZ: MODO MASIVO (DASHBOARD FULL)
-# ============================================================
-elif modo_app == "📊 Procesamiento Masivo (Lotes)":
+
+elif modo_app == "Procesamiento Masivo (Lotes)":
     st.title("Dashboard Analítico Masivo")
     st.markdown("Sube tus archivos CSV para procesar miles de cuentas y generar el análisis financiero.")
     
-    st.sidebar.header("📂 1. Carga de Datos")
+    st.sidebar.header("1. Carga de Datos")
     file_saldo = st.sidebar.file_uploader("Subir Saldo.csv", type=['csv'])
     file_detalles = st.sidebar.file_uploader("Subir Detalles.csv (Opcional)", type=['csv'])
     
-    st.sidebar.header("⚙️ 2. Parámetros Financieros")
+    st.sidebar.header("2. Parámetros Financieros")
     precio_dolar = st.sidebar.slider("Precio de compra por $1", 0.01, 0.50, 0.05)
     costo_operativo_pct = st.sidebar.slider("Costo operativo (%)", 0, 30, 12)
     perfil_cobranza = st.sidebar.selectbox("Perfil de cobranza", ['decreciente', 'uniforme'])
@@ -191,8 +190,8 @@ elif modo_app == "📊 Procesamiento Masivo (Lotes)":
     if file_saldo is None:
         st.info("👈 Sube tu archivo CSV en la barra lateral para habilitar el botón de ejecución.")
     else:
-        # BOTÓN DE EJECUCIÓN AGREGADO AQUÍ
-        ejecutar = st.button("▶️ EJECUTAR ANÁLISIS MASIVO", type="primary", use_container_width=True)
+        # BOTÓN DE EJECUCIÓN
+        ejecutar = st.button("EJECUTAR ANÁLISIS MASIVO", type="primary", use_container_width=True)
         
         # Usamos session_state para que el dashboard no desaparezca al tocar las pestañas
         if ejecutar:
@@ -244,10 +243,8 @@ elif modo_app == "📊 Procesamiento Masivo (Lotes)":
             c7.metric("TIR Anual", f"{tir_anual:.1%}" if not np.isnan(tir_anual) else "N/D")
             c8.metric("VAN (10%)", f"${van_10:,.0f}")
 
-            # ============================================================
             # TABS DEL DASHBOARD (VISUALIZACIONES)
-            # ============================================================
-            tab1, tab2, tab3 = st.tabs(["📊 Distribución de Riesgo", "📈 Análisis Financiero", "📋 Detalle de Cuentas"])
+            tab1, tab2, tab3 = st.tabs(["Distribución de Riesgo", "Análisis Financiero", "Detalle de Cuentas"])
 
             with tab1:
                 st.subheader("Análisis de Riesgo y Segmentación")
